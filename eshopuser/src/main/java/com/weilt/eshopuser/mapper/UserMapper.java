@@ -5,8 +5,6 @@ import com.weilt.common.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
  * @author weilt
  * @com.weilt.eshopuser.mapper
@@ -15,14 +13,11 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-
-    List<User> findByName(String username);
+    int addUser(User user);
 
     int updateByIdSelective(User user);
 
     int deleteById(Integer id);
-
-    int addUser(User user);
 
     int checkUserName(String userName);
 

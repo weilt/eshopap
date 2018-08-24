@@ -16,24 +16,22 @@
         </select>
 
 
-    <select id="selectLogin"  resultType="com.weilt.common.entity.User">
+    <select id="selectLogin" resultType="com.weilt.common.entity.User">
          select id,user_name,password,email,phone,question,role,create_time,update_time from eshop_user
          where user_name = #{userName} and password = #{password};
-      </select>
-    <select id="selectQuestionByUserName"  resultType="string" parameterType="string">
+    </select>
+    <select id="selectQuestionByUserName" resultType="string" parameterType="string">
                select question from eshop_user
                where user_name = #{userName};
       </select>
 
 
-
-    <select id="checkAnswer"  resultType="int" parameterType="map">
+    <select id="checkAnswer" resultType="int" parameterType="map">
                      select count(1) from eshop_user
                      where user_name = #{userName}
                      and question = #{question}
                      and answer = #{answer};
             </select>
-
 
 
     <update id="updatePasswordByUserName" parameterType="map">
@@ -44,11 +42,9 @@
       </update>
 
 
-
     <select id="checkPassword" resultType="int" parameterType="map">
              select count(1) from eshop_user where id = #{userId} and password=#{password};
     </select>
-
 
 
     <update id="updateByIdSelective" parameterType="com.weilt.common.entity.User">
@@ -107,7 +103,12 @@
                                update_time = #{updateTime}
                                where id = #{id};
     </update>
-<select id="checkEmailByUserId" resultType="int" parameterType="map">
+    <select id="checkEmailByUserId" resultType="int" parameterType="map">
       select count(1) from eshop_user where email = #{email} and id != #{userId};
 </select>
+
+    <insert id="addUser" parameterType="com.weilt.common.entity.User">
+        Insert into eshop_user(user_name,password,phone,email,question,answer,role,create_time,update_time)
+                     values (#{userName},#{password},#{phone},#{email},#{question},#{answer},#{role},now(),now());
+    </insert>
 </mapper>

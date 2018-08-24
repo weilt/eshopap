@@ -6,10 +6,13 @@ import com.weilt.common.dto.ServerResponse;
 import com.weilt.common.entity.User;
 import com.weilt.eshopuser.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import sun.awt.SunHints;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,10 +22,12 @@ import javax.servlet.http.HttpSession;
  * @date 2018/8/21 == 0:36
  */
 @RestController
-@RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private IUserService iUserService;
+
+
+
 
     /**
      * 用户登录接口
@@ -31,6 +36,11 @@ public class UserController {
      * @param session
      * @return
      */
+    @ApiOperation(value = "前台用户登录",notes = "只能采用post方法")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName",value = "用户名",defaultValue = "无",required = true,dataType = "String"),
+            @ApiImplicitParam(name = "password",value = "密码",defaultValue = "无",required = true,dataType = "String"),
+            @ApiImplicitParam(name = "session",value = "session用来存储用户信息",defaultValue = "无",required = true,dataType = "HttpSession")})
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ServerResponse<User> login(String userName, String password, HttpSession session){
         ServerResponse<User> response = iUserService.login(userName,password);
@@ -56,18 +66,18 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @PostMapping(value = "/register")
     public ServerResponse<String> register(User user){
         return iUserService.register(user);
     }
 
 
-    @RequestMapping(value = "/checkvalid",method = RequestMethod.POST)
+    @PostMapping(value = "/checkvalid")
     public ServerResponse<String> checkValid(String str,String type){
         return  iUserService.checkValid(str,type);
     }
 
-    @RequestMapping(value = "/getuserinfo",method = RequestMethod.POST)
+    @PostMapping(value = "/getuserinfo")
     public ServerResponse<User> getUserInfo(HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user!=null){
@@ -76,24 +86,24 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户信息");
     }
 
-    @RequestMapping(value = "/getforgetquestion")
+    @PostMapping(value = "/getforgetquestion")
     public ServerResponse<String> forgetGetQuestion(String userName){
         return iUserService.selectQuestion(userName);
     }
 
-    @RequestMapping(value = "/checkanswer",method = RequestMethod.POST)
+    @PostMapping(value = "/checkanswer")
     public ServerResponse<String> forgetCheckAnswer(String userName,String question,String answer){
         return iUserService.checkAnswer(userName,question,answer);
     }
 
-    @RequestMapping(value = "/resetforgetpassword",method = RequestMethod.POST)
+    @PostMapping(value = "/resetforgetpassword")
     public ServerResponse<String> forgetResetPassword(String userName,String passwordNew,String forgetToken){
         return iUserService.forgetResetPassword(userName,passwordNew,forgetToken);
 
     }
 
 
-    @RequestMapping(value = "/resetpassword",method = RequestMethod.POST)
+    @PostMapping(value = "/resetpassword")
     public ServerResponse<String> resetPassword(HttpSession session,String password,String passwordNew){
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
@@ -103,7 +113,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/updateinfomation",method = RequestMethod.POST)
+    @PostMapping(value = "/updateinfomation")
     public ServerResponse<User> update_infomation(HttpSession session,User user){
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
@@ -118,7 +128,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/getinfomation",method = RequestMethod.POST)
+    @PostMapping(value = "/getinfomation")
     public ServerResponse<User> get_infomation(HttpSession session){
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){

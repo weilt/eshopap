@@ -7,9 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
+        <module name="eshopcart" />
+        <module name="eshopcategory" />
+        <module name="eshopproduct" />
         <module name="eshopuser" />
         <module name="eurekaserver" />
+        <module name="gateway" />
+        <module name="zuulserver" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="category" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

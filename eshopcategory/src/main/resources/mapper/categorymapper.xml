@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weilt.eshopcategory.mapper.CategoryMapper">
+    <sql id="Base_Column_list">
+        id,parent_id,name,status,sort_order,create_time,update_time
+    </sql>
+    <insert id="insertCategory" parameterType="com.weilt.common.entity.Category">
+        Insert into eshop_catagory(parent_id,name,status,sort_order,create_time,update_time)
+                     values (#{parentId},#{name},#{status,jdbcType=BIT},#{sortOrder},#{role},now(),now());
+    </insert>
+
+    <update id="updateCategorySelective" parameterType="com.weilt.common.entity.Category">
+        update eshop_category
+        <set>
+            <if test="categoryName != null">
+                name=#{categoryName,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{categoryId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectCategoryChildById" parameterType="int" resultType="com.weilt.common.entity.Category">
+        select <include refid="Base_Column_List"/>
+        from eshop_category
+        where parent_id = #{parentId};
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="com.weilt.common.entity.Category">
+        select <include refid="Base_Column_List"/>
+        from eshop_category
+        where id = #{categoryId};
+    </select>
+</mapper>

@@ -7,6 +7,11 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/eurekaserver/pom.xml" />
         <option value="$PROJECT_DIR$/eshopuser/pom.xml" />
+        <option value="$PROJECT_DIR$/zuulserver/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/eshopproduct/pom.xml" />
+        <option value="$PROJECT_DIR$/eshopcart/pom.xml" />
+        <option value="$PROJECT_DIR$/eshopcategory/pom.xml" />
       </list>
     </option>
   </component>

@@ -4,15 +4,14 @@ import com.weilt.common.dto.Const;
 import com.weilt.common.dto.ServerResponse;
 import com.weilt.common.dto.TokenCache;
 import com.weilt.common.entity.User;
+import com.weilt.common.redisservice.IRedisService;
 import com.weilt.common.utils.MD5Util;
 import com.weilt.eshopuser.mapper.UserMapper;
 import com.weilt.eshopuser.service.IUserService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.UUID;
 
 /**
@@ -25,6 +24,8 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private IRedisService iRedisService;
     @Override
     public ServerResponse<User> login(String username, String password){
         int resultCount = userMapper.checkUserName(username);
@@ -41,7 +42,10 @@ public class UserServiceImpl implements IUserService {
         }
 
         user.setPassword(StringUtils.EMPTY);
+
+
         return  ServerResponse.createBySuccess("登录成功",user);
+
     }
 
     @Override
@@ -96,6 +100,7 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccessMessage("校验成功");
     }
 
+    @Override
     public ServerResponse selectQuestion(String userName){
         ServerResponse validResponse = this.checkValid(userName,Const.USERNAME);
         if(validResponse.isSuccess()){
@@ -113,6 +118,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+    @Override
     public ServerResponse<String> checkAnswer(String userName,String question,String answer){
             int resultCount = userMapper.checkAnswer(userName,question,answer);
             if(resultCount>0){
@@ -127,6 +133,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+    @Override
     public ServerResponse<String> forgetResetPassword(String userName,String passwordNew,String forgetToken)
     {
         if(StringUtils.isNotBlank(forgetToken)){
@@ -154,6 +161,7 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("修改密码失败，请重试！！！");
     }
 
+    @Override
     public ServerResponse<String> resetPassword(String password,String passwordNew,User user){
         //防止横向越权，需要校验用户的旧密码，一定要指定是这个用户，因为我们查询的是count(1),如果不指定id ,
         //结果一定是>0，也就是ture
@@ -172,6 +180,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+    @Override
     public ServerResponse<User> updateInfomation(User user){
         //userName 是不能更新的。
         //email也要进行一个校验，校验email是不是已经存在，如果存在的话，不能是当前用户的
@@ -192,6 +201,7 @@ public class UserServiceImpl implements IUserService {
         return  ServerResponse.createByErrorMessage("更新失败！！！");
     }
 
+    @Override
     public ServerResponse<User> getInfomation(Integer userId){
         User user = userMapper.selectById(userId);
         if(user == null){

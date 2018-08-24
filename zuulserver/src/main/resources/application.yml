@@ -1,0 +1,6 @@
+
+zuul:
+  routes:
+    userservice:
+      path: /user/**
+      serviceId: eshop-userservice
