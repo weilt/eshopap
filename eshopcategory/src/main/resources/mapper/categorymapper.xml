@@ -26,10 +26,25 @@
         from eshop_category
         where parent_id = #{parentId};
     </select>
+    <select id="selectAllCategory" resultType="com.weilt.common.entity.Category">
+        Select <include refid="Base_Column_list"/>
+        from eshop_category
+    </select>
 
     <select id="selectById" parameterType="int" resultType="com.weilt.common.entity.Category">
         select <include refid="Base_Column_List"/>
         from eshop_category
         where id = #{categoryId};
     </select>
+    <select id="selectByNameAndParentId" parameterType="map" resultType="com.weilt.common.entity.Category">
+        select <include refid="Base_Column_List"/>
+        from eshop_category
+        where name=#{categoryName}
+        and parent_id=#{parnetId}
+        and status = 1
+        limit 0,1
+    </select>
+    <delete id="deleteById" parameterType="int">
+        delete from eshop_category where id = #{categoryId}
+    </delete>
 </mapper>

@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author weilt
@@ -67,7 +69,6 @@ public class ProductServiceImpl implements IProductService {
         if(productId == null || status == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-
         Product product = new Product();
         product.setId(productId);
         product.setStatus(status);
@@ -180,7 +181,7 @@ public class ProductServiceImpl implements IProductService {
         List<Integer> catagoryIdList = new ArrayList<Integer>();
         if(categoryId!=null){
             //TODO
-            ServerResponse<Category> serverResponse= iCategorySerice.getCateory(categoryId);//TODO需要访问数据库一次，需要优化   weilt
+            ServerResponse<Category> serverResponse= iCategorySerice.getCateory(categoryId);//TODO 需要访问数据库一次，已优化   weilt
             Category category =(Category) serverResponse.getData();
             if(category == null  && StringUtils.isBlank(keyword)){
                 PageHelper.startPage(pageNum,pageSize);

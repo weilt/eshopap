@@ -2,6 +2,7 @@ package com.weilt.eshopcategory.mapper;
 
 import com.weilt.common.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,4 +18,7 @@ public interface CategoryMapper {
     int updateCategorySelective(Category category);
     List<Category> selectCategoryChildById(Integer parentId);
     Category selectById(Integer categoryId);
+    List<Category> selectAllCategory();
+    Category selectByNameAndParentId(@Param("categoryName")String categoryName,@Param("parentId") Integer parentId);
+    int deleteById(Integer categoryId);
 }

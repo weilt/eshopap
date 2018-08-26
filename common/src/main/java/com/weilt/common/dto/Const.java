@@ -27,8 +27,16 @@ public class Const {
         int ROLE_CUSTOMER = 0; //普通用户
         int ROLE_ADMIN = 1;   //管理员
     }
+
+    public interface Redis_Lock{
+        String REDIS_LOCK_CATEGORY_KEY="REDIS_LOCK_CATEGORY_KEY";
+        String GET_REDIS_LOCK = "GETED_REDIS_LOCK";//获得redis锁
+        String  RELEASE_REDIS_LOCK = "RELEASED_REDIS_LOCK";//释放redis锁
+    }
     public static final String EMAIL="email";
     public static final String USERNAME="username";
+
+    public static final String CATEGORY_REDIS_KEY = "category_redis_key_";
 
    public enum ProductStatusEnum{
        ON_SALE(1,"在线");

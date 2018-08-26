@@ -4,6 +4,7 @@ import com.weilt.common.dto.ServerResponse;
 import com.weilt.common.entity.Category;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author weilt
@@ -17,4 +18,6 @@ public interface ICategoryService {
     ServerResponse<List<Category>> getChildParallelCategory(Integer categoryId);
     ServerResponse<List<Integer>> selectCategoryAndDeepCategory(Integer categoryId);
     ServerResponse<Category> selectCategoryByPrimaryKey(Integer categoryId);
+    ServerResponse<String> putAllDataToRedis();
+    ServerResponse<List<Integer>> selectCacheCategoryAndDeepCategory(Integer categoryId);
 }
