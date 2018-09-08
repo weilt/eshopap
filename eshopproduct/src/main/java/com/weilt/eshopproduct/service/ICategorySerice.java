@@ -14,7 +14,7 @@ import java.util.List;
  * @com.weilt.eshopproduct.service
  * @date 2018/8/25 == 1:22
  */
-@FeignClient(value = "eshop-categoryservice")
+@FeignClient(value = "eshop-categoryservice",fallback = Error.class)
 public interface ICategorySerice {
     //需要一个服务，输入catoryId，返回一个catagory对像
     @RequestMapping(value = "/catagory/getcategory")
